@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="LearnXAI personalized learning prototype" />
+  <title>LearnXAI | Personalized Learning</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="LearnXAI home"><span class="brand-mark">L</span><span>Learn<span class="brand-x">X</span>AI</span></a>
+      <div class="student-mini"><div class="avatar">H</div><div><strong id="sideName">Harish</strong><small>Student account</small></div></div>
+      <nav class="nav">
+        <button class="nav-link active" data-page="dashboard"><span>▦</span> Dashboard</button>
+        <button class="nav-link" data-page="assessment"><span>✓</span> Skill assessment</button>
+        <button class="nav-link" data-page="learning"><span>◈</span> My learning</button>
+        <button class="nav-link" data-page="tutor"><span>✦</span> AI tutor</button>
+        <button class="nav-link" data-page="career"><span>↗</span> Career roadmap</button>
+        <button class="nav-link" data-page="skills"><span>♧</span> Skill wallet</button>
+      </nav>
+      <div class="sidebar-bottom"><div class="tip"><span>✦ Learning tip</span><p>Small, consistent practice beats cramming. Try 20 minutes today.</p></div><button class="nav-link" id="resetBtn"><span>↻</span> Reset demo data</button></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+        <div class="breadcrumb">LearnXAI <span>/</span> <strong id="pageCrumb">Dashboard</strong></div>
+        <div class="top-actions"><span class="demo-badge">DEMO MODE</span><button class="profile-button" id="profileBtn"><span class="avatar small">H</span><span id="topName">Harish</span>⌄</button></div>
+      </header>
+
+      <section class="page active" id="page-dashboard">
+        <div class="welcome-row"><div><p class="eyebrow">YOUR LEARNING SPACE</p><h1>Good to see you, <span id="welcomeName">Harish</span> 👋</h1><p class="muted">Build skills at your own pace. Your next step is ready.</p></div><button class="primary-btn" data-goto="assessment">Take an assessment <span>→</span></button></div>
+        <div class="stats-grid">
+          <article class="stat-card"><div class="stat-icon purple">◈</div><p>Learning progress</p><div class="stat-line"><strong id="progressValue">42%</strong><span class="positive">+8% this week</span></div><div class="progress"><span id="progressBar" style="width:42%"></span></div></article>
+          <article class="stat-card"><div class="stat-icon cyan">✓</div><p>Quizzes completed</p><div class="stat-line"><strong id="quizCount">3</strong><span class="muted small-text">practice sessions</span></div><div class="mini-note">Keep your streak going</div></article>
+          <article class="stat-card"><div class="stat-icon green">◎</div><p>Average quiz score</p><div class="stat-line"><strong id="avgScore">68%</strong><span class="positive">Keep improving</span></div><div class="mini-note">Based on saved demo attempts</div></article>
+          <article class="stat-card"><div class="stat-icon orange">⚑</div><p>Topics to revisit</p><div class="stat-line"><strong id="weakCount">2</strong><span class="muted small-text">focus areas</span></div><div class="mini-note">Your learning plan adapts</div></article>
+        </div>
+        <div class="content-grid">
+          <article class="panel chart-panel"><div class="panel-heading"><div><h2>Learning performance</h2><p class="muted">Topic-wise understanding</p></div><span class="period-pill">Current profile</span></div><div class="chart-wrap"><canvas id="performanceChart" aria-label="Topic performance chart"></canvas></div></article>
+          <article class="panel"><div class="panel-heading"><div><h2>Recommended for you</h2><p class="muted">Based on your current scores</p></div><span class="sparkle">✦</span></div><div id="recommendationList" class="recommendation-list"></div><button class="text-btn" data-goto="learning">View learning plan →</button></article>
+        </div>
+        <div class="content-grid lower-grid">
+          <article class="panel"><div class="panel-heading"><div><h2>Continue learning</h2><p class="muted">Pick up where you left off</p></div><button class="text-btn" data-goto="learning">View all</button></div><div class="course-row"><div class="course-icon purple">JS</div><div class="course-info"><strong>Java fundamentals</strong><p class="muted">Loops, arrays &amp; OOP</p><div class="progress"><span style="width:58%"></span></div></div><span class="course-percent">58%</span></div><div class="course-row"><div class="course-icon cyan">DS</div><div class="course-info"><strong>Data structures</strong><p class="muted">Arrays and searching</p><div class="progress"><span style="width:32%"></span></div></div><span class="course-percent">32%</span></div></article>
+          <article class="panel"><div class="panel-heading"><div><h2>Recent activity</h2><p class="muted">Your latest learning steps</p></div></div><div id="activityList" class="activity-list"></div></article>
+        </div>
+      </section>
+
+      <section class="page" id="page-assessment">
+        <div class="page-heading"><p class="eyebrow">KNOW YOUR STARTING POINT</p><h1>Skill assessment</h1><p class="muted">Answer these Java questions to update your learning profile.</p></div>
+        <div class="panel assessment-panel"><div class="assessment-top"><span class="period-pill">Java fundamentals</span><span id="questionCounter">Question 1 of 5</span></div><div class="assessment-progress"><span id="questionProgress"></span></div><div id="questionArea"></div><div class="assessment-controls"><button class="secondary-btn" id="prevQuestion">← Previous</button><button class="primary-btn" id="nextQuestion">Next question →</button></div><div id="assessmentResult" class="result-box hidden"></div></div>
+      </section>
+
+      <section class="page" id="page-learning">
+        <div class="page-heading"><p class="eyebrow">YOUR PERSONAL PLAN</p><h1>My learning</h1><p class="muted">Focus on concepts that will make the biggest difference.</p></div>
+        <div class="learning-summary"><div><span class="stat-icon purple">◈</span><div><strong id="learningFocusCount">2 focus topics</strong><p class="muted">Prioritized using your latest demo scores</p></div></div><span class="demo-badge">ADAPTIVE PLAN</span></div>
+        <div id="learningCards" class="learning-cards"></div>
+      </section>
+
+      <section class="page" id="page-tutor">
+        <div class="page-heading"><p class="eyebrow">LEARN WITH GUIDANCE</p><h1>AI tutor <span class="beta-badge">BETA DEMO</span></h1><p class="muted">Ask a programming question and get a sample learning explanation.</p></div>
+        <div class="panel chat-panel"><div class="chat-header"><div class="tutor-avatar">✦</div><div><strong>LearnXAI Study Buddy</strong><p class="muted">Demo responses · Not connected to a live AI API</p></div><span class="online-dot"></span></div><div id="chatMessages" class="chat-messages"><div class="message tutor-message"><span class="message-avatar">✦</span><div><p>Hi! I'm your LearnXAI study buddy. Ask me about Java loops, arrays, OOP, or learning strategies.</p><small>Demo response</small></div></div></div><form id="chatForm" class="chat-form"><input id="chatInput" type="text" placeholder="Ask about a programming concept..." maxlength="500" required /><button class="primary-btn" type="submit">Send ↑</button></form><div class="quick-prompts"><button data-prompt="Explain Java arrays simply">Explain arrays</button><button data-prompt="What is object-oriented programming?">Explain OOP</button><button data-prompt="How should I practice Java loops?">Practice loops</button></div></div>
+      </section>
+
+      <section class="page" id="page-career">
+        <div class="page-heading"><p class="eyebrow">PLAN YOUR NEXT MOVE</p><h1>Career roadmap</h1><p class="muted">Explore a path and track the skills you want to develop.</p></div>
+        <div class="career-tabs"><button class="career-tab active" data-career="java">Java Developer</button><button class="career-tab" data-career="fullstack">Full-Stack Developer</button><button class="career-tab" data-career="ai">AI / ML Engineer</button></div>
+        <div class="panel career-panel" id="careerContent"></div>
+      </section>
+
+      <section class="page" id="page-skills">
+        <div class="page-heading"><p class="eyebrow">YOUR ACHIEVEMENTS</p><h1>Skill wallet</h1><p class="muted">A snapshot of the skills and learning milestones you have recorded.</p></div>
+        <div class="stats-grid skill-stats"><article class="stat-card"><div class="stat-icon purple">◇</div><p>Skills explored</p><div class="stat-line"><strong id="skillsExplored">6</strong><span class="muted small-text">topics</span></div></article><article class="stat-card"><div class="stat-icon green">✓</div><p>Milestones</p><div class="stat-line"><strong id="milestoneCount">2</strong><span class="muted small-text">earned</span></div></article><article class="stat-card"><div class="stat-icon orange">⚡</div><p>Practice streak</p><div class="stat-line"><strong>3 days</strong><span class="muted small-text">demo value</span></div></article></div>
+        <div class="panel"><div class="panel-heading"><div><h2>Your skills</h2><p class="muted">Updated from assessment results</p></div></div><div id="skillList" class="skill-list"></div></div>
+        <div class="panel achievements-panel"><div class="panel-heading"><div><h2>Achievements</h2><p class="muted">Earn milestones by learning and practicing</p></div></div><div id="achievementList" class="achievement-grid"></div></div>
+      </section>
+
+      <footer class="footer">LearnXAI Prototype <span>•</span> Built for personalized learning <span class="footer-note">Demo data only — no real student account system.</span></footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="script.js"></script>
+</body>
+</html>
